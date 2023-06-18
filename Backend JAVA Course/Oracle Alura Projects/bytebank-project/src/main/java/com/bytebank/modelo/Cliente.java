@@ -45,4 +45,14 @@ public class Cliente implements Autenticable {
     public void setClave(String clave) {
         this.setClave(clave);
     }
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "nombre='" + nombre + '\'' +
+                ", documento='" + documento + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", util=" + util +
+                '}';
+    }
 }

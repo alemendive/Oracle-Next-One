@@ -1,11 +1,8 @@
 package com.bytebank.modelo;
 
-/**
- * @version 1.0
- * @alemendive
- */
 
-public abstract class Cuenta {
+
+public abstract class Cuenta implements Comparable<Cuenta> {
 
     private static int total;
     private final int agencia;
@@ -30,11 +27,7 @@ public abstract class Cuenta {
         return saldo;
     }
 
-    /**
-     * Este metodo retira dinero de la cuenta y si ocurre un error devuelve una excepecion.
-     *
-     * @throws SaldoInsuficienteException
-     */
+
     public void saca(double valor) throws SaldoInsuficienteException {
         if (this.saldo < valor) {
             throw new SaldoInsuficienteException("Saldo insuficiente");
@@ -55,13 +48,49 @@ public abstract class Cuenta {
         return false;
     }
 
+
+
+
+    public int getAgencia() {
+        return agencia;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public Cliente getTitular() {
+        return titular;
+    }
+
+
+
     @Override
     public String toString() {
-        return "Cuenta{" +
-                "agencia=" + agencia +
-                ", numero=" + numero +
-                ", titular=" + titular +
-                ", saldo=" + saldo +
-                '}';
+        return "Numero: " + this.numero + ", Agencia:" + this.agencia
+                + ", Titular: " + this.titular.getNombre();
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        // Basado en valores
+        Cuenta cuenta = (Cuenta) obj;
+        return this.agencia == cuenta.getAgencia() &&
+                this.numero == cuenta.getNumero();
+    }
+
+    @Override
+    public int compareTo(Cuenta o){
+        // orden natural : Numero agencia
+        return Integer.compare(this.agencia, o.getAgencia());
+    }
+
+    public void setTitular(Cliente titular) {
+        this.titular.setNombre(titular.getNombre());
+        this.titular.setDocumento(titular.getDocumento());
+    }
+
+    public void depositar(double v) {
+        this.saldo += v;
     }
 }
